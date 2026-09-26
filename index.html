@@ -69,50 +69,86 @@
   <div class="noise-overlay" aria-hidden="true"></div>
 
   <!-- ==========================================================================
-       1. STICKY GLASS NAVIGATION
+       1. LUXURY HOLOGRAPHIC COMMAND HEADER (FLOATING GLASS CAPSULE)
        ========================================================================== -->
-  <header id="main-header" class="relative z-50">
-    <nav id="main-navbar" class="fixed top-0 left-0 w-full py-4 px-6 md:px-10 lg:px-16 transition-all duration-300 z-50 flex items-center justify-between">
+  <header id="main-header" class="fixed top-0 left-0 w-full z-50 px-3 sm:px-6 lg:px-10 pt-3 pb-1 transition-all duration-300 pointer-events-none">
+    
+    <nav id="main-navbar" class="max-w-7xl mx-auto w-full pointer-events-auto rounded-2xl px-4 sm:px-6 py-2.5 flex items-center justify-between transition-all duration-300">
       
-      <!-- Brand Logo -->
-      <a href="#hero" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-aurora-cyan rounded-lg p-1" aria-label="Aurora Signal Home">
-        <div class="relative w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 p-[1.5px] shadow-[0_0_15px_rgba(110,231,249,0.4)] group-hover:shadow-[0_0_25px_rgba(179,136,255,0.7)] transition-shadow duration-300">
-          <div class="w-full h-full bg-[#0A0B10] rounded-[10px] flex items-center justify-center overflow-hidden">
-            <!-- Soundwave SVG Logo -->
+      <!-- Left: Geometric Planar Brandmark -->
+      <a href="#hero" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-xl p-1" aria-label="Aurora Signal Home">
+        <!-- Isometric Acoustic Core Icon -->
+        <div class="relative w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 p-[1.5px] shadow-[0_0_20px_rgba(110,231,249,0.35)] group-hover:shadow-[0_0_30px_rgba(179,136,255,0.7)] transition-all duration-300">
+          <div class="w-full h-full bg-[#090b12] rounded-[10px] flex items-center justify-center overflow-hidden relative">
+            <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-transparent pointer-events-none"></div>
+            <!-- Precision Transducer Waveform Vector -->
             <svg class="w-5 h-5 text-cyan-300 group-hover:scale-110 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 10v4M6 6v12M10 2v20M14 7v10M18 5v14M22 11v2"/>
+              <path d="M2 13V11M6 17V7M10 21V3M14 18V6M18 15V9M22 13V11"/>
             </svg>
           </div>
         </div>
+
         <div class="flex flex-col">
-          <span class="font-display font-extrabold tracking-wider text-lg uppercase text-white leading-none">
-            AURORA <span class="text-gradient-aurora font-medium">SIGNAL</span>
-          </span>
-          <span class="font-mono text-[10px] text-slate-400 tracking-widest mt-0.5">PLANAR ACOUSTICS</span>
+          <div class="flex items-center gap-2">
+            <span class="font-display font-extrabold tracking-wider text-base sm:text-lg uppercase text-white leading-none">
+              AURORA <span class="text-gradient-aurora">SIGNAL</span>
+            </span>
+            <span class="hidden sm:inline-block px-1.5 py-0.5 rounded bg-cyan-950/80 border border-cyan-400/40 font-mono text-[9px] text-cyan-300 tracking-wider">MK-IV</span>
+          </div>
+          <span class="font-mono text-[9px] text-slate-400 tracking-widest mt-0.5">PLANAR ACOUSTIC LABS</span>
         </div>
       </a>
 
-      <!-- Desktop Navigation Links -->
-      <div class="hidden lg:flex items-center gap-8 bg-slate-900/40 backdrop-blur-md border border-white/10 px-8 py-2.5 rounded-full shadow-lg">
-        <a href="#hero" class="nav-link">Overview</a>
-        <a href="#services" class="nav-link">Innovations</a>
-        <a href="#experience" class="nav-link">Acoustic Core</a>
-        <a href="#pricing" class="nav-link">Tiers</a>
-        <a href="#testimonials" class="nav-link">Reviews</a>
-        <a href="#faq" class="nav-link">FAQ</a>
-        <a href="#contact" class="nav-link">Contact</a>
+      <!-- Center: Desktop High-Tech Navigation Links -->
+      <div class="hidden xl:flex items-center gap-1 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full shadow-inner">
+        <a href="#services" class="nav-link">
+          <span class="text-cyan-400/80 text-[10px]">01</span>
+          <span>ARCHITECTURE</span>
+        </a>
+        <a href="#experience" class="nav-link">
+          <span class="text-purple-400/80 text-[10px]">02</span>
+          <span>ACOUSTIC CORE</span>
+        </a>
+        <a href="#pricing" class="nav-link">
+          <span class="text-pink-400/80 text-[10px]">03</span>
+          <span>SPEC TIERS</span>
+        </a>
+        <a href="#testimonials" class="nav-link">
+          <span class="text-emerald-400/80 text-[10px]">04</span>
+          <span>REVIEWS</span>
+        </a>
+        <a href="#faq" class="nav-link">
+          <span class="text-slate-400 text-[10px]">05</span>
+          <span>PROTOCOL & LAB</span>
+        </a>
       </div>
 
-      <!-- Right Side Action & Mobile Hamburger Button -->
-      <div class="flex items-center gap-4">
+      <!-- Right: Live Audio Spectrum Pill + CTA + Mobile Hamburger -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Navbar Quick Audio Equalizer & Status Pill -->
+        <button id="nav-audio-quick-btn" class="hidden md:flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-cyan-400/30 hover:border-cyan-400/70 text-xs font-mono text-cyan-200 transition-all cursor-pointer group shadow-[0_0_12px_rgba(110,231,249,0.15)]" title="Click to toggle ambient spatial audio generator">
+          <div class="flex items-end gap-0.5 h-3.5 px-1 py-0.5 bg-black/60 rounded" aria-hidden="true">
+            <span class="nav-eq-bar"></span>
+            <span class="nav-eq-bar"></span>
+            <span class="nav-eq-bar"></span>
+            <span class="nav-eq-bar"></span>
+          </div>
+          <span class="text-[11px] font-semibold text-cyan-300 group-hover:text-white transition-colors">96k LOSSLESS</span>
+        </button>
+
+        <!-- Shimmering CTA Button -->
         <div class="hidden sm:block btn-aurora-wrapper">
-          <a href="#pricing" class="btn-aurora-shimmer text-xs uppercase tracking-wider py-2.5 px-6">
-            Pre-Order Aurora One
+          <a href="#pricing" class="btn-aurora-shimmer text-xs uppercase tracking-wider py-2 px-5">
+            <span>Acquire Master</span>
+            <svg class="w-3.5 h-3.5 ml-1.5 inline-block text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
           </a>
         </div>
 
         <!-- Custom CSS Morphing Hamburger Button -->
-        <button id="hamburger-btn" class="hamburger-btn lg:hidden focus:outline-none focus:ring-2 focus:ring-aurora-cyan" aria-label="Toggle Navigation Menu" aria-expanded="false">
+        <button id="hamburger-btn" class="hamburger-btn xl:hidden focus:outline-none focus:ring-2 focus:ring-aurora-cyan" aria-label="Toggle Navigation Menu" aria-expanded="false">
           <span class="hamburger-line line-1"></span>
           <span class="hamburger-line line-2"></span>
           <span class="hamburger-line line-3"></span>
@@ -122,33 +158,51 @@
     </nav>
 
     <!-- Mobile Fullscreen Glass Overlay Menu -->
-    <div id="mobile-menu" class="mobile-nav-overlay" aria-label="Mobile Navigation Menu">
-      <div class="flex flex-col items-center gap-6 text-center">
-        <div class="nav-item">
-          <a href="#hero" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">Overview</a>
+    <div id="mobile-menu" class="mobile-nav-overlay pointer-events-none" aria-label="Mobile Navigation Menu">
+      <div class="flex flex-col items-center gap-5 text-center max-w-sm w-full px-6">
+        
+        <div class="nav-item mb-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-400/30 text-xs font-mono text-cyan-300">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <span>AURORA COMMAND CONSOLE // MK-IV</span>
+          </div>
         </div>
-        <div class="nav-item">
-          <a href="#services" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">Innovations</a>
+
+        <div class="nav-item w-full">
+          <a href="#services" class="mobile-nav-link block font-mono text-lg font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors py-2 px-4 rounded-xl bg-white/5 border border-white/5">
+            01 // ARCHITECTURE
+          </a>
         </div>
-        <div class="nav-item">
-          <a href="#experience" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">Acoustic Core</a>
+        <div class="nav-item w-full">
+          <a href="#experience" class="mobile-nav-link block font-mono text-lg font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors py-2 px-4 rounded-xl bg-white/5 border border-white/5">
+            02 // ACOUSTIC CORE
+          </a>
         </div>
-        <div class="nav-item">
-          <a href="#pricing" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">Transmission Tiers</a>
+        <div class="nav-item w-full">
+          <a href="#pricing" class="mobile-nav-link block font-mono text-lg font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors py-2 px-4 rounded-xl bg-white/5 border border-white/5">
+            03 // TRANSMISSION TIERS
+          </a>
         </div>
-        <div class="nav-item">
-          <a href="#testimonials" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">Master Reviews</a>
+        <div class="nav-item w-full">
+          <a href="#testimonials" class="mobile-nav-link block font-mono text-lg font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors py-2 px-4 rounded-xl bg-white/5 border border-white/5">
+            04 // MASTER REVIEWS
+          </a>
         </div>
-        <div class="nav-item">
-          <a href="#faq" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">FAQ & Specs</a>
+        <div class="nav-item w-full">
+          <a href="#faq" class="mobile-nav-link block font-mono text-lg font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors py-2 px-4 rounded-xl bg-white/5 border border-white/5">
+            05 // PROTOCOL & LAB
+          </a>
         </div>
-        <div class="nav-item">
-          <a href="#contact" class="mobile-nav-link font-display text-2xl font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors">Studio Contact</a>
+        <div class="nav-item w-full">
+          <a href="#contact" class="mobile-nav-link block font-mono text-lg font-bold tracking-wider text-slate-200 hover:text-cyan-300 transition-colors py-2 px-4 rounded-xl bg-white/5 border border-white/5">
+            06 // DIRECT CONTACT
+          </a>
         </div>
-        <div class="nav-item mt-4">
-          <div class="btn-aurora-wrapper">
-            <a href="#pricing" class="btn-aurora-shimmer mobile-nav-link py-3 px-8 text-sm">
-              Pre-Order Flagship Unit
+
+        <div class="nav-item w-full mt-4">
+          <div class="btn-aurora-wrapper w-full">
+            <a href="#pricing" class="btn-aurora-shimmer mobile-nav-link w-full py-3.5 px-8 text-xs font-mono uppercase tracking-widest">
+              Acquire Signal Master
             </a>
           </div>
         </div>

@@ -446,43 +446,57 @@ body {
   filter: blur(4px);
 }
 
-/* --- Navigation & Active Underline Indicator --- */
+/* --- Luxury Floating Holographic Command Header --- */
 #main-navbar {
-  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+  background: rgba(13, 17, 29, 0.72) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.8), 
+              0 0 30px -5px rgba(110, 231, 249, 0.15), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 #main-navbar.scrolled {
-  background: rgba(10, 11, 16, 0.85) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(110, 231, 249, 0.15) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(110, 231, 249, 0.08) !important;
+  background: rgba(8, 10, 16, 0.92) !important;
+  border-color: rgba(110, 231, 249, 0.25) !important;
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.9), 
+              0 0 35px -2px rgba(110, 231, 249, 0.22),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
 }
 
+/* Nav Link Hover & Active State */
 .nav-link {
   position: relative;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
   font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--text-secondary);
-  transition: color 0.3s ease;
-  padding: 6px 0;
+  transition: all 0.25s ease;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .nav-link:hover {
   color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--aurora-cyan), var(--aurora-violet), var(--aurora-pink));
+  background: linear-gradient(90deg, var(--aurora-cyan), var(--aurora-pink));
   transform: translateX(-50%);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
   border-radius: 2px;
@@ -490,14 +504,34 @@ body {
 
 .nav-link:hover::after,
 .nav-link.active::after {
-  width: 100%;
-  box-shadow: 0 0 8px var(--aurora-cyan);
+  width: calc(100% - 24px);
+  box-shadow: 0 0 10px var(--aurora-cyan);
 }
 
 .nav-link.active {
   color: #FFFFFF;
-  text-shadow: 0 0 12px rgba(110, 231, 249, 0.4);
+  background: linear-gradient(135deg, rgba(110, 231, 249, 0.12), rgba(179, 136, 255, 0.12));
+  border: 1px solid rgba(110, 231, 249, 0.25);
+  box-shadow: 0 0 16px rgba(110, 231, 249, 0.15);
 }
+
+/* Mini Nav Audio EQ Waves */
+.nav-eq-bar {
+  width: 2px;
+  background-color: var(--aurora-cyan);
+  border-radius: 1px;
+  animation: nav-eq 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes nav-eq {
+  0% { height: 4px; }
+  100% { height: 14px; }
+}
+
+.nav-eq-bar:nth-child(1) { animation-delay: 0.1s; }
+.nav-eq-bar:nth-child(2) { animation-delay: 0.3s; }
+.nav-eq-bar:nth-child(3) { animation-delay: 0.15s; }
+.nav-eq-bar:nth-child(4) { animation-delay: 0.45s; }
 
 /* Hamburger Icon Custom CSS Morphing */
 .hamburger-btn {

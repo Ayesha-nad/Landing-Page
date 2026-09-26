@@ -982,13 +982,22 @@ function initWebAudioSynthesizer() {
     }
   };
 
-  toggleBtn.addEventListener('click', () => {
+  const navAudioBtn = document.getElementById('nav-audio-quick-btn');
+
+  function handleToggle() {
     if (isSynthPlaying) {
       stopHarmonics();
+      if (navAudioBtn) navAudioBtn.classList.remove('border-emerald-400/80');
     } else {
       startHarmonics();
+      if (navAudioBtn) navAudioBtn.classList.add('border-emerald-400/80');
     }
-  });
+  }
+
+  toggleBtn.addEventListener('click', handleToggle);
+  if (navAudioBtn) {
+    navAudioBtn.addEventListener('click', handleToggle);
+  }
 }
 
 /* ==========================================================================
