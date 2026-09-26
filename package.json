@@ -1,0 +1,9 @@
+{
+  "name": "aurora-signal-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aurora Signal - Split Reveal Marquee Hero Landing Page",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
