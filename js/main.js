@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initNewsletterForm();
   initSoundDemoToggle();
+  initAcousticSoundstageCanvas();
+  initWebAudioSynthesizer();
+  initSpatialSlider();
+  initFrequencyModeTabs();
+  initLiveTelemetryJitter();
 });
 
 /* ==========================================================================
@@ -657,3 +662,406 @@ function initSoundDemoToggle() {
       : `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play Simulator`;
   });
 }
+
+/* ==========================================================================
+   11. UNIQUE QUANTUM ACOUSTIC CANVAS ENGINE (3D PARTICLE SOUNDSTAGE)
+   ========================================================================== */
+let globalSpatialScale = 1.0;
+let currentFreqMode = 'binaural'; // 'subbass', 'binaural', 'transient', 'quantum'
+
+function initAcousticSoundstageCanvas() {
+  const canvas = document.getElementById('hero-acoustic-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let animationFrameId;
+  let width, height;
+  let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
+  const particleCount = 120;
+  const particles = [];
+  const rings = [
+    { radius: 110, count: 24, speed: 0.008, angle: 0 },
+    { radius: 180, count: 36, speed: -0.006, angle: 0 },
+    { radius: 260, count: 48, speed: 0.004, angle: 0 }
+  ];
+
+  function resize() {
+    const parent = canvas.parentElement;
+    width = canvas.width = parent ? parent.offsetWidth : window.innerWidth;
+    height = canvas.height = parent ? parent.offsetHeight : window.innerHeight;
+    mouse.x = width / 2;
+    mouse.y = height / 2;
+    mouse.targetX = width / 2;
+    mouse.targetY = height / 2;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
+    }
+  });
+
+  // Initialize particles
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      theta: Math.random() * Math.PI * 2,
+      phi: Math.acos(Math.random() * 2 - 1),
+      baseRadius: 90 + Math.random() * 160,
+      radius: 90 + Math.random() * 160,
+      speed: 0.004 + Math.random() * 0.008,
+      size: 1.2 + Math.random() * 2.2,
+      colorMode: Math.random() > 0.5 ? 'cyan' : (Math.random() > 0.5 ? 'violet' : 'pink'),
+      noiseOffset: Math.random() * 100
+    });
+  }
+
+  let time = 0;
+
+  function render() {
+    time += 0.02;
+    // Smooth lerp mouse
+    mouse.x += (mouse.targetX - mouse.x) * 0.08;
+    mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
+    ctx.clearRect(0, 0, width, height);
+
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    const rotX = (mouse.y - centerY) * 0.0006;
+    const rotY = (mouse.x - centerX) * 0.0006;
+
+    // Draw Dynamic Central Acoustic Aura Core
+    const gradient = ctx.createRadialGradient(
+      centerX + (mouse.x - centerX) * 0.1,
+      centerY + (mouse.y - centerY) * 0.1,
+      10,
+      centerX,
+      centerY,
+      280 * globalSpatialScale
+    );
+    
+    if (currentFreqMode === 'subbass') {
+      gradient.addColorStop(0, 'rgba(110, 231, 249, 0.22)');
+      gradient.addColorStop(0.4, 'rgba(121, 40, 202, 0.14)');
+      gradient.addColorStop(1, 'rgba(10, 11, 16, 0)');
+    } else if (currentFreqMode === 'transient') {
+      gradient.addColorStop(0, 'rgba(255, 122, 198, 0.25)');
+      gradient.addColorStop(0.4, 'rgba(110, 231, 249, 0.16)');
+      gradient.addColorStop(1, 'rgba(10, 11, 16, 0)');
+    } else {
+      gradient.addColorStop(0, 'rgba(110, 231, 249, 0.18)');
+      gradient.addColorStop(0.4, 'rgba(179, 136, 255, 0.12)');
+      gradient.addColorStop(1, 'rgba(10, 11, 16, 0)');
+    }
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 300 * globalSpatialScale, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw Orbital Harmonic Wave Rings
+    rings.forEach((ring, ringIdx) => {
+      ring.angle += ring.speed * (currentFreqMode === 'transient' ? 2.2 : (currentFreqMode === 'subbass' ? 0.6 : 1.2));
+      const currentRadius = ring.radius * globalSpatialScale + Math.sin(time + ringIdx) * 12;
+
+      ctx.beginPath();
+      ctx.strokeStyle = ringIdx === 0 
+        ? 'rgba(110, 231, 249, 0.25)' 
+        : (ringIdx === 1 ? 'rgba(179, 136, 255, 0.2)' : 'rgba(255, 122, 198, 0.18)');
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([4, 8]);
+      ctx.ellipse(centerX, centerY, currentRadius, currentRadius * 0.52, rotY + ring.angle, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Render 3D Projected Particles
+    const projectedParticles = [];
+
+    particles.forEach((p) => {
+      p.theta += p.speed * (currentFreqMode === 'transient' ? 1.8 : 1.0);
+      const waveOffset = Math.sin(time * 2 + p.noiseOffset) * (currentFreqMode === 'subbass' ? 35 : 18);
+      const r = (p.baseRadius + waveOffset) * globalSpatialScale;
+
+      let x = r * Math.sin(p.phi) * Math.cos(p.theta);
+      let y = r * Math.sin(p.phi) * Math.sin(p.theta);
+      let z = r * Math.cos(p.phi);
+
+      // Rotate around X and Y axes
+      const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+      const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+
+      // Rotate Y
+      const x1 = x * cosY - z * sinY;
+      const z1 = z * cosY + x * sinY;
+
+      // Rotate X
+      const y2 = y * cosX - z1 * sinX;
+      const z2 = z1 * cosX + y * sinX;
+
+      // Projection
+      const fov = 400;
+      const scale = fov / (fov + z2);
+      const projX = centerX + x1 * scale;
+      const projY = centerY + y2 * scale;
+
+      projectedParticles.push({
+        x: projX,
+        y: projY,
+        z: z2,
+        scale: scale,
+        size: p.size * scale,
+        colorMode: p.colorMode
+      });
+    });
+
+    // Sort by Z for proper depth
+    projectedParticles.sort((a, b) => a.z - b.z);
+
+    // Draw Connecting Sound Wave Mesh Vectors
+    ctx.lineWidth = 0.6;
+    for (let i = 0; i < projectedParticles.length; i++) {
+      for (let j = i + 1; j < projectedParticles.length; j++) {
+        const dx = projectedParticles[i].x - projectedParticles[j].x;
+        const dy = projectedParticles[i].y - projectedParticles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 65 * globalSpatialScale) {
+          const alpha = (1 - dist / (65 * globalSpatialScale)) * 0.25;
+          ctx.strokeStyle = `rgba(110, 231, 249, ${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(projectedParticles[i].x, projectedParticles[i].y);
+          ctx.lineTo(projectedParticles[j].x, projectedParticles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw Individual Nodes
+    projectedParticles.forEach((p) => {
+      const alpha = Math.max(0.2, (p.scale - 0.4) * 1.5);
+      let colorStr = `rgba(110, 231, 249, ${alpha})`;
+      if (p.colorMode === 'violet') colorStr = `rgba(179, 136, 255, ${alpha})`;
+      if (p.colorMode === 'pink') colorStr = `rgba(255, 122, 198, ${alpha})`;
+
+      ctx.fillStyle = colorStr;
+      ctx.shadowColor = colorStr;
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, Math.max(0.8, p.size), 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    ctx.shadowBlur = 0;
+    animationFrameId = requestAnimationFrame(render);
+  }
+
+  render();
+}
+
+/* ==========================================================================
+   12. WEB AUDIO API SYNTHESIZER (HARMONIC BINAURAL DRONE ENGINE)
+   ========================================================================== */
+let audioCtx = null;
+let masterGain = null;
+let synthOscillators = [];
+let synthFilter = null;
+let isSynthPlaying = false;
+
+function initWebAudioSynthesizer() {
+  const toggleBtn = document.getElementById('hero-synth-toggle');
+  const synthLed = document.getElementById('synth-led');
+  const synthText = document.getElementById('synth-toggle-text');
+
+  if (!toggleBtn) return;
+
+  const modeFrequencies = {
+    subbass: [55, 110, 165],        // A1, A2, E3 (Deep infrasonic harmonic)
+    binaural: [216, 432, 540],      // A3, A4 (432Hz Golden Ratio)
+    transient: [440, 880, 1320],    // High sparkling harmonics
+    quantum: [261.63, 523.25, 784]  // C Major Cosmic Harmonic
+  };
+
+  function createAudioEngine() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return false;
+    audioCtx = new AudioContextClass();
+
+    masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+
+    synthFilter = audioCtx.createBiquadFilter();
+    synthFilter.type = 'lowpass';
+    synthFilter.frequency.setValueAtTime(650, audioCtx.currentTime);
+    synthFilter.Q.setValueAtTime(4.0, audioCtx.currentTime);
+
+    synthFilter.connect(masterGain);
+    masterGain.connect(audioCtx.destination);
+    return true;
+  }
+
+  function startHarmonics() {
+    if (!audioCtx) {
+      if (!createAudioEngine()) return;
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    stopHarmonics();
+
+    const freqs = modeFrequencies[currentFreqMode] || modeFrequencies.binaural;
+
+    freqs.forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = idx === 0 ? 'sine' : (idx === 1 ? 'triangle' : 'sine');
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.18 / (idx + 1), audioCtx.currentTime);
+
+      osc.connect(gain);
+      gain.connect(synthFilter);
+      osc.start();
+      synthOscillators.push({ osc, gain });
+    });
+
+    // Smooth fade in
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 1.2);
+
+    isSynthPlaying = true;
+    toggleBtn.classList.add('playing');
+    if (synthLed) synthLed.className = 'w-2 h-2 rounded-full bg-emerald-400 synth-led';
+    if (synthText) synthText.textContent = 'Mute Spatial Soundscape';
+  }
+
+  function stopHarmonics() {
+    if (!audioCtx || !masterGain) return;
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+
+    setTimeout(() => {
+      synthOscillators.forEach(({ osc }) => {
+        try { osc.stop(); osc.disconnect(); } catch (e) {}
+      });
+      synthOscillators = [];
+    }, 650);
+
+    isSynthPlaying = false;
+    toggleBtn.classList.remove('playing');
+    if (synthLed) synthLed.className = 'w-2 h-2 rounded-full bg-slate-500 synth-led';
+    if (synthText) synthText.textContent = 'Engage Spatial Soundscape';
+  }
+
+  window.updateSynthPitch = function () {
+    if (!isSynthPlaying || !audioCtx) return;
+    const freqs = modeFrequencies[currentFreqMode] || modeFrequencies.binaural;
+
+    synthOscillators.forEach(({ osc }, idx) => {
+      if (freqs[idx]) {
+        osc.frequency.cancelScheduledValues(audioCtx.currentTime);
+        osc.frequency.setValueAtTime(osc.frequency.value, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freqs[idx], audioCtx.currentTime + 0.5);
+      }
+    });
+
+    // Modulate filter cutoff
+    if (synthFilter) {
+      const cutoff = currentFreqMode === 'subbass' ? 320 : (currentFreqMode === 'transient' ? 1400 : 750);
+      synthFilter.frequency.exponentialRampToValueAtTime(cutoff, audioCtx.currentTime + 0.6);
+    }
+  };
+
+  toggleBtn.addEventListener('click', () => {
+    if (isSynthPlaying) {
+      stopHarmonics();
+    } else {
+      startHarmonics();
+    }
+  });
+}
+
+/* ==========================================================================
+   13. SPATIAL EXPANSION SLIDER
+   ========================================================================== */
+function initSpatialSlider() {
+  const slider = document.getElementById('hero-spatial-slider');
+  const readout = document.getElementById('hero-spatial-readout');
+  if (!slider) return;
+
+  slider.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value, 10);
+    globalSpatialScale = val / 100;
+    if (readout) {
+      readout.textContent = `${val}%`;
+    }
+  });
+}
+
+/* ==========================================================================
+   14. FREQUENCY MODE TABS (SOUNDSTAGE MORPHING)
+   ========================================================================== */
+function initFrequencyModeTabs() {
+  const modeButtons = document.querySelectorAll('.freq-mode-btn');
+  const modeDisplay = document.getElementById('hero-active-mode-tag');
+  const freqHertz = document.getElementById('hero-active-hertz');
+
+  modeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      modeButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const mode = btn.getAttribute('data-mode');
+      currentFreqMode = mode;
+
+      if (modeDisplay) {
+        modeDisplay.textContent = btn.getAttribute('data-title') || 'BINAURAL 360°';
+      }
+      if (freqHertz) {
+        freqHertz.textContent = btn.getAttribute('data-freq') || '432 Hz';
+      }
+
+      if (window.updateSynthPitch) {
+        window.updateSynthPitch();
+      }
+    });
+  });
+}
+
+/* ==========================================================================
+   15. LIVE TELEMETRY JITTER SIMULATION
+   ========================================================================== */
+function initLiveTelemetryJitter() {
+  const thdEl = document.getElementById('telemetry-thd');
+  const fluxEl = document.getElementById('telemetry-flux');
+  const radarCoords = document.getElementById('radar-coords');
+
+  if (!thdEl && !fluxEl) return;
+
+  setInterval(() => {
+    if (thdEl) {
+      const base = 0.00028 + Math.random() * 0.00005;
+      thdEl.textContent = `${base.toFixed(5)}%`;
+    }
+    if (fluxEl) {
+      const flux = 1.84 + Math.random() * 0.03;
+      fluxEl.textContent = `${flux.toFixed(2)} T`;
+    }
+    if (radarCoords) {
+      const az = (Math.sin(Date.now() * 0.001) * 35).toFixed(1);
+      const el = (Math.cos(Date.now() * 0.0015) * 18).toFixed(1);
+      radarCoords.textContent = `AZ: ${az}° // EL: ${el}°`;
+    }
+  }, 1600);
+}
+

@@ -971,3 +971,278 @@ body {
   .aurora-blob-3 { display: none; }
   .aurora-blob-4 { display: none; }
 }
+
+/* ==========================================================================
+   UNIQUE QUANTUM ACOUSTIC SOUNDSTAGE HERO (INTERACTIVE HUD & CANVAS)
+   ========================================================================== */
+.hero-stage-container {
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hero Canvas Layer */
+#hero-acoustic-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* Giant Translucent Editorial Background Title */
+.hero-giant-watermark {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 15vw, 15rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* Frequency Mode Selector Tabs */
+.freq-mode-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.freq-mode-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(110, 231, 249, 0.4);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.freq-mode-btn.active {
+  background: linear-gradient(135deg, rgba(110, 231, 249, 0.18), rgba(179, 136, 255, 0.18));
+  border-color: var(--aurora-cyan);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(110, 231, 249, 0.3), inset 0 0 12px rgba(110, 231, 249, 0.2);
+}
+
+.freq-mode-btn.active .freq-dot {
+  background-color: var(--aurora-cyan);
+  box-shadow: 0 0 8px var(--aurora-cyan);
+  animation: pulse-ring 1.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(110, 231, 249, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(110, 231, 249, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(110, 231, 249, 0); }
+}
+
+/* Polar Radar HUD Grid */
+.polar-radar-circle {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 1px solid rgba(110, 231, 249, 0.2);
+  background: radial-gradient(circle, rgba(110, 231, 249, 0.04) 0%, transparent 70%);
+  overflow: hidden;
+}
+
+.polar-radar-circle::before {
+  content: '';
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  border: 1px dashed rgba(179, 136, 255, 0.25);
+}
+
+.polar-radar-circle::after {
+  content: '';
+  position: absolute;
+  inset: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 122, 198, 0.2);
+}
+
+.radar-sweep-arm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(110, 231, 249, 0.9), transparent);
+  transform-origin: 0 0;
+  animation: radar-spin 4s linear infinite;
+  box-shadow: 0 0 8px var(--aurora-cyan);
+}
+
+@keyframes radar-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.radar-blip {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--aurora-pink);
+  box-shadow: 0 0 8px var(--aurora-pink);
+  animation: blip-pulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes blip-pulse {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.4); }
+}
+
+/* Audio Synthesizer Master Toggle Bar */
+.audio-synth-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  background: rgba(14, 18, 30, 0.85);
+  border: 1px solid rgba(110, 231, 249, 0.3);
+  backdrop-filter: blur(16px);
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(110, 231, 249, 0.15);
+}
+
+.audio-synth-toggle:hover {
+  background: rgba(22, 28, 48, 0.95);
+  border-color: var(--aurora-cyan);
+  box-shadow: 0 0 25px rgba(110, 231, 249, 0.35);
+  transform: translateY(-2px);
+}
+
+.audio-synth-toggle.playing {
+  border-color: var(--aurora-emerald);
+  box-shadow: 0 0 25px rgba(78, 250, 148, 0.3);
+}
+
+.audio-synth-toggle.playing .synth-led {
+  background-color: var(--aurora-emerald);
+  box-shadow: 0 0 10px var(--aurora-emerald);
+  animation: pulse-ring 1.5s infinite;
+}
+
+/* Spatial Range Slider */
+.spatial-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(110, 231, 249, 0.4), rgba(179, 136, 255, 0.4), rgba(255, 122, 198, 0.4));
+  outline: none;
+  transition: opacity 0.2s;
+}
+
+.spatial-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--aurora-cyan);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--aurora-cyan);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.spatial-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 16px var(--aurora-pink);
+  border-color: var(--aurora-pink);
+}
+
+/* Interactive Hotspot Node */
+.acoustic-hotspot {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(110, 231, 249, 0.2);
+  border: 1px solid var(--aurora-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.acoustic-hotspot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--aurora-cyan);
+  box-shadow: 0 0 8px var(--aurora-cyan);
+}
+
+.acoustic-hotspot:hover {
+  transform: scale(1.3);
+  background: rgba(255, 122, 198, 0.3);
+  border-color: var(--aurora-pink);
+}
+
+.acoustic-hotspot:hover::after {
+  background: var(--aurora-pink);
+  box-shadow: 0 0 12px var(--aurora-pink);
+}
+
+.hotspot-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(10, 12, 20, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--aurora-cyan);
+  padding: 10px 14px;
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(110, 231, 249, 0.25);
+  z-index: 20;
+}
+
+.acoustic-hotspot:hover .hotspot-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+

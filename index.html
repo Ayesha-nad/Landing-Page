@@ -158,122 +158,229 @@
 
   <main>
     <!-- ==========================================================================
-         2. HERO SECTION
+         2. UNIQUE HERO SECTION: THE QUANTUM ACOUSTIC SOUNDSTAGE
          ========================================================================== -->
-    <section id="hero" class="min-h-screen relative flex items-center justify-center pt-28 pb-20 px-6 md:px-12 lg:px-16 overflow-hidden">
+    <section id="hero" class="min-h-screen relative flex flex-col justify-between pt-24 pb-12 px-4 sm:px-6 md:px-10 lg:px-16 overflow-hidden select-none">
       
-      <!-- Content Container -->
-      <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+      <!-- Giant Translucent Editorial Watermark -->
+      <div class="hero-giant-watermark" aria-hidden="true">AURORA SIGNAL</div>
+
+      <!-- Interactive 3D Particle Waveform Canvas Engine -->
+      <canvas id="hero-acoustic-canvas" aria-label="Interactive 3D Acoustic Particle Soundstage"></canvas>
+
+      <!-- Main Stage Container (Foreground HUD) -->
+      <div class="max-w-7xl w-full mx-auto relative z-10 flex flex-col justify-between flex-grow gap-8">
         
-        <!-- Left Column: Oversized Asymmetric Headlines & Editorial Copy -->
-        <div class="lg:col-span-7 flex flex-col items-start reveal-fade-rise">
+        <!-- Top Row: Editorial Asymmetric Headline + Polar Radar Telemetry -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-6">
           
-          <!-- Eyebrow Spec Badge -->
-          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/70 border border-cyan-500/30 backdrop-blur-md mb-6 shadow-[0_0_15px_rgba(110,231,249,0.15)]">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span class="font-mono text-xs font-semibold text-cyan-300 tracking-wider uppercase">GEN-IV BERYLLIUM TRANSDUCERS</span>
-          </div>
+          <!-- Top Left: Asymmetric Typographic Statement -->
+          <div class="lg:col-span-8 flex flex-col items-start reveal-fade-rise">
+            
+            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-cyan-400/30 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(110,231,249,0.2)]">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+              <span class="font-mono text-[11px] font-semibold text-cyan-300 tracking-widest uppercase">
+                CALIBRATION FREQUENCY: <span id="hero-active-hertz" class="text-white">432 Hz</span>
+              </span>
+              <span class="text-slate-500">|</span>
+              <span id="hero-active-mode-tag" class="font-mono text-[11px] text-pink-300 uppercase tracking-wider">BINAURAL 360°</span>
+            </div>
 
-          <!-- Asymmetric Split Headline -->
-          <h1 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.08] mb-6">
-            <span class="text-white block">SCULPTED SILENCE.</span>
-            <span class="text-gradient-aurora block">HYPER-DIMENSIONAL SOUND.</span>
-          </h1>
+            <h1 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.04] text-white">
+              <span class="block">HEAR WHAT CANNOT</span>
+              <span class="text-gradient-aurora block">BE MEASURED.</span>
+            </h1>
 
-          <!-- Editorial Subheadline -->
-          <p class="font-body text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed mb-8">
-            Engineered with 70mm planar magnetic diaphragms and 64-bit quantum acoustic calibration. Unveiling micro-transients beyond the human noise threshold with absolute zero distortion.
-          </p>
+            <p class="font-body text-slate-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed mt-4">
+              Enter the quantum acoustic chamber. Move your cursor to bend harmonic particle fields, toggle spatial frequencies, and experience planar-magnetic soundstage geometry.
+            </p>
 
-          <!-- CTAs -->
-          <div class="flex flex-wrap items-center gap-4 sm:gap-6 mb-12">
-            <div class="btn-aurora-wrapper">
-              <a href="#pricing" class="btn-aurora-shimmer text-sm sm:text-base py-3.5 px-8">
-                <span>Experience Aurora One</span>
-                <svg class="w-4 h-4 ml-2 inline-block text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            <!-- Quick Action & Audio Synthesizer Toggle -->
+            <div class="flex flex-wrap items-center gap-4 mt-6">
+              
+              <!-- Web Audio API Synthesizer Master Toggle -->
+              <button id="hero-synth-toggle" class="audio-synth-toggle group focus:outline-none" aria-label="Toggle Spatial Soundscape Synthesizer">
+                <span id="synth-led" class="w-2 h-2 rounded-full bg-slate-500 synth-led"></span>
+                <span id="synth-toggle-text" class="text-xs sm:text-sm text-cyan-200 group-hover:text-white transition-colors">Engage Spatial Soundscape</span>
+                <svg class="w-4 h-4 text-cyan-300 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
                 </svg>
-              </a>
+              </button>
+
+              <div class="btn-aurora-wrapper">
+                <a href="#pricing" class="btn-aurora-shimmer text-xs sm:text-sm py-2.5 px-6">
+                  <span>Pre-Order Flagship</span>
+                  <svg class="w-3.5 h-3.5 ml-2 inline-block text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                </a>
+              </div>
+
             </div>
 
-            <a href="#services" class="btn-glass-ghost text-sm sm:text-base">
-              <span>Explore Architecture</span>
-              <svg class="w-4 h-4 ml-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-              </svg>
-            </a>
           </div>
 
-          <!-- Hero Metrics Bar -->
-          <div class="grid grid-cols-3 gap-4 sm:gap-8 pt-6 border-t border-white/10 w-full max-w-xl">
-            <div>
-              <div class="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight">0.0003%</div>
-              <div class="font-mono text-xs text-slate-400 mt-0.5">THD+N DISTORTION</div>
-            </div>
-            <div>
-              <div class="font-display font-bold text-2xl sm:text-3xl text-gradient-cyan tracking-tight">5Hz - 85kHz</div>
-              <div class="font-mono text-xs text-slate-400 mt-0.5">FREQUENCY SPECTRUM</div>
-            </div>
-            <div>
-              <div class="font-display font-bold text-2xl sm:text-3xl text-gradient-violet tracking-tight">&lt; 0.8ms</div>
-              <div class="font-mono text-xs text-slate-400 mt-0.5">AURORALINK LATENCY</div>
+          <!-- Top Right: Holographic Polar Radar HUD Capsule -->
+          <div class="lg:col-span-4 flex justify-start lg:justify-end reveal-fade-rise delay-100">
+            <div class="glass-panel rounded-2xl p-5 border border-cyan-500/20 backdrop-blur-xl w-full max-w-xs shadow-[0_0_25px_rgba(0,0,0,0.5)]">
+              
+              <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                  <span class="font-mono text-[11px] font-bold text-white tracking-widest uppercase">SPATIAL RADAR</span>
+                </div>
+                <span id="radar-coords" class="font-mono text-[10px] text-cyan-300">AZ: +14.2° // EL: -8.7°</span>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <!-- Circular Polar Radar Scan -->
+                <div class="polar-radar-circle shrink-0">
+                  <div class="radar-sweep-arm"></div>
+                  <!-- Simulated 3D Sound Objects -->
+                  <div class="radar-blip" style="top: 25%; left: 65%;"></div>
+                  <div class="radar-blip" style="top: 70%; left: 35%; animation-delay: 0.8s;"></div>
+                  <div class="radar-blip" style="top: 45%; left: 80%; animation-delay: 1.4s;"></div>
+                </div>
+
+                <!-- Radar Telemetry Readout -->
+                <div class="flex flex-col gap-2 font-mono text-[11px]">
+                  <div>
+                    <span class="text-slate-400 block text-[9px] uppercase">SOUNDSTAGE OBJECTS</span>
+                    <span class="text-cyan-200 font-bold">12 BINAURAL NODES</span>
+                  </div>
+                  <div>
+                    <span class="text-slate-400 block text-[9px] uppercase">ANGULAR RESOLUTION</span>
+                    <span class="text-purple-300 font-bold">0.1° DISPERSION</span>
+                  </div>
+                  <div>
+                    <span class="text-slate-400 block text-[9px] uppercase">LATENCY JITTER</span>
+                    <span class="text-emerald-400 font-bold">&lt; 0.04 ms</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
         </div>
 
-        <!-- Right Column: Interactive Flagship Hardware Showcase -->
-        <div class="lg:col-span-5 relative flex items-center justify-center reveal-fade-rise delay-200">
+        <!-- Center Interactive Transducer Nodes (Hotspots on Canvas Space) -->
+        <div class="relative w-full my-2 sm:my-6 min-h-[140px] sm:min-h-[180px] flex items-center justify-center reveal-fade-rise delay-200">
           
-          <!-- Outer Ambient Glow -->
-          <div class="absolute -inset-4 bg-gradient-to-tr from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl -z-10" aria-hidden="true"></div>
-
-          <!-- Main Product Glass Card Frame -->
-          <div class="glass-panel-interactive rounded-2xl p-4 sm:p-6 w-full max-w-lg border border-white/15 relative">
+          <!-- Central Holographic Target Frame -->
+          <div class="relative w-full max-w-2xl h-36 sm:h-44 rounded-2xl border border-white/10 bg-slate-950/40 backdrop-blur-md p-4 sm:p-6 flex flex-col justify-between shadow-[inset_0_0_30px_rgba(110,231,249,0.05)]">
             
-            <!-- Live Indicator Badge -->
-            <div class="absolute top-8 left-8 z-20 flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-cyan-400/40">
-              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-              <span class="font-mono text-[11px] text-cyan-200 tracking-wider uppercase">REFERENCE PROTOTYPE IV</span>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] sm:text-xs text-slate-400 tracking-wider">FIG 1.0 // PLANAR-FLUX ARCHITECTURE</span>
+              <span class="font-mono text-[10px] sm:text-xs text-cyan-300">INTERACTIVE ACOUSTIC NODES [3]</span>
             </div>
 
-            <!-- Flagship Image -->
-            <div class="overflow-hidden rounded-xl bg-slate-950/80 aspect-[4/3] relative flex items-center justify-center">
-              <img 
-                src="assets/images/hero-product.jpg" 
-                alt="Aurora One Planar Magnetic Audiophile Headphones with Glowing Fiber-Optic Acoustic Chambers" 
-                class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                loading="eager"
-              >
-              <!-- Glass Sheen Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-t from-[#0A0B10] via-transparent to-transparent opacity-80 pointer-events-none"></div>
-            </div>
-
-            <!-- Bottom Floating Visualizer Bar -->
-            <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="flex items-end gap-1 h-7 px-2 py-1 bg-black/50 rounded-lg border border-white/10" aria-label="Audio Visualizer">
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                  <span class="sound-bar"></span>
-                </div>
-                <div>
-                  <div id="sound-demo-status" class="font-mono text-xs font-semibold text-cyan-300">DSP FLUX: 96kHz Lossless</div>
-                  <div class="text-[11px] text-slate-400">Spatial Quantum Mapping Active</div>
+            <div class="relative w-full h-16 sm:h-20 flex items-center justify-around">
+              
+              <!-- Hotspot 1: Beryllium Foil -->
+              <div class="acoustic-hotspot group" style="top: 25%; left: 20%;">
+                <div class="hotspot-tooltip">
+                  <div class="font-display font-bold text-xs text-white">70mm Beryllium Diaphragm</div>
+                  <div class="font-mono text-[10px] text-cyan-300">0.02ms Transient Speed // Ultra-Light Foil</div>
                 </div>
               </div>
 
-              <button id="sound-demo-toggle" class="sound-toggle-btn text-xs font-display px-3 py-1.5 rounded-lg bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/40 text-slate-200 hover:text-white transition-all flex items-center gap-1.5" aria-label="Toggle Simulator">
-                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                <span>Mute</span>
-              </button>
+              <!-- Hotspot 2: AuroraLink Transceiver -->
+              <div class="acoustic-hotspot group" style="top: 50%; left: 50%;">
+                <div class="hotspot-tooltip">
+                  <div class="font-display font-bold text-xs text-white">AuroraLink™ 2.4G RF Core</div>
+                  <div class="font-mono text-[10px] text-purple-300">192kHz/32-Bit Bit-Perfect Streaming</div>
+                </div>
+              </div>
+
+              <!-- Hotspot 3: Obsidian Helmholtz Damping -->
+              <div class="acoustic-hotspot group" style="top: 30%; left: 80%;">
+                <div class="hotspot-tooltip">
+                  <div class="font-display font-bold text-xs text-white">Obsidian Helmholtz Resonance Cavity</div>
+                  <div class="font-mono text-[10px] text-pink-300">-42dB Pure Acoustic Isolation</div>
+                </div>
+              </div>
+
+              <div class="text-center font-mono text-[11px] sm:text-xs text-slate-400">
+                <span class="text-cyan-300">●</span> Hover or click glowing nodes to inspect planar transducers
+              </div>
+
             </div>
 
+            <!-- Bottom Hotspot Bar -->
+            <div class="flex items-center justify-between pt-2 border-t border-white/5 font-mono text-[10px] text-slate-400">
+              <span>DRIVER GEOMETRY: SYMMETRIC N54</span>
+              <span class="text-cyan-300">64-BIT DSP SYNCHRONIZED</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Bottom Command Deck: Frequency Mode Switcher + Spatial Slider + Hardware Telemetry -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center pt-4 border-t border-white/10 reveal-fade-rise delay-300">
+          
+          <!-- Left: 4-Band Interactive Frequency Morphing Switcher -->
+          <div class="lg:col-span-6 flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[10px] uppercase tracking-widest text-slate-400">SELECT ACOUSTIC SPECTRUM:</span>
+              <span class="font-mono text-[10px] text-cyan-300">LIVE CANVAS MORPH</span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button class="freq-mode-btn" data-mode="subbass" data-title="SUB-SONIC FLUX" data-freq="12 Hz">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 freq-dot"></span>
+                <span>01 // SUB-BASS (12Hz)</span>
+              </button>
+              
+              <button class="freq-mode-btn active" data-mode="binaural" data-title="BINAURAL 360°" data-freq="432 Hz">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 freq-dot"></span>
+                <span>02 // BINAURAL (432Hz)</span>
+              </button>
+
+              <button class="freq-mode-btn" data-mode="transient" data-title="TRANSIENT AIR" data-freq="24 kHz">
+                <span class="w-1.5 h-1.5 rounded-full bg-pink-400 freq-dot"></span>
+                <span>03 // TRANSIENT (24kHz)</span>
+              </button>
+
+              <button class="freq-mode-btn" data-mode="quantum" data-title="QUANTUM LOSSLESS" data-freq="85 kHz">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400 freq-dot"></span>
+                <span>04 // LOSSLESS (85kHz)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Middle: Spatial Width Expansion Range Slider -->
+          <div class="lg:col-span-3 flex flex-col gap-2 px-2">
+            <div class="flex justify-between items-center font-mono text-[10px]">
+              <span class="text-slate-400 uppercase">SPATIAL WIDTH:</span>
+              <span id="hero-spatial-readout" class="text-cyan-300 font-bold">100%</span>
+            </div>
+            <input 
+              type="range" 
+              id="hero-spatial-slider" 
+              min="50" 
+              max="200" 
+              value="100" 
+              class="spatial-slider" 
+              aria-label="Adjust Spatial Soundstage Width"
+            >
+            <div class="flex justify-between text-[9px] font-mono text-slate-500">
+              <span>DIRECT (50%)</span>
+              <span>HYPER-SPHERE (200%)</span>
+            </div>
+          </div>
+
+          <!-- Right: Live Hardware Telemetry Indicators -->
+          <div class="lg:col-span-3 grid grid-cols-2 gap-3 bg-slate-900/60 backdrop-blur-md p-3 rounded-xl border border-white/10">
+            <div>
+              <div class="font-mono text-[9px] text-slate-400 uppercase">HARMONIC THD+N</div>
+              <div id="telemetry-thd" class="font-mono text-sm font-bold text-cyan-300 mt-0.5">0.00029%</div>
+            </div>
+            <div>
+              <div class="font-mono text-[9px] text-slate-400 uppercase">MAGNETIC FLUX</div>
+              <div id="telemetry-flux" class="font-mono text-sm font-bold text-purple-300 mt-0.5">1.85 T</div>
+            </div>
           </div>
 
         </div>
@@ -281,10 +388,10 @@
       </div>
 
       <!-- Bottom Animated Glowing Scroll Cue Chevron -->
-      <a href="#services" class="scroll-cue-indicator absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 group cursor-pointer focus:outline-none" aria-label="Scroll to Innovations Section">
-        <span class="font-mono text-[11px] uppercase tracking-widest text-slate-400 group-hover:text-cyan-300 transition-colors">DISCOVER ARCHITECTURE</span>
-        <div class="w-8 h-8 rounded-full border border-cyan-400/30 flex items-center justify-center bg-slate-900/50 backdrop-blur-md group-hover:border-cyan-400 group-hover:shadow-[0_0_12px_rgba(110,231,249,0.5)] transition-all">
-          <svg class="w-4 h-4 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <a href="#services" class="scroll-cue-indicator self-center mt-6 flex flex-col items-center gap-1 group cursor-pointer focus:outline-none z-10" aria-label="Scroll to Innovations Section">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-slate-400 group-hover:text-cyan-300 transition-colors">EXPLORE ARCHITECTURE</span>
+        <div class="w-7 h-7 rounded-full border border-cyan-400/30 flex items-center justify-center bg-slate-900/60 backdrop-blur-md group-hover:border-cyan-400 group-hover:shadow-[0_0_12px_rgba(110,231,249,0.5)] transition-all">
+          <svg class="w-3.5 h-3.5 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
           </svg>
         </div>
