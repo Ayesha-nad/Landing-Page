@@ -87,21 +87,33 @@ function initCustomCursor() {
 }
 
 /* ==========================================================================
-   2. STICKY NAV, SMOOTH SCROLL & ACTIVE LINK INTERSECTION OBSERVER
+   2. STICKY NAV, SCROLL PROGRESS & KEYBOARD SHORTCUTS
    ========================================================================== */
 function initStickyNavAndActiveLinks() {
-  const navbar = document.getElementById('main-navbar');
-  const navLinks = document.querySelectorAll('.nav-link');
+  const header = document.getElementById('main-header');
+  const progressLine = document.getElementById('nav-scroll-progress');
+  const navLinks = document.querySelectorAll('.arch-nav-link, .nav-link');
   const sections = document.querySelectorAll('section[id], header[id]');
 
-  // Navbar Opacity on Scroll
+  // Live Hairline Scroll Progress Bar & Header Scrolled State
   function handleScroll() {
-    if (window.scrollY > 40) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+
+    if (progressLine) {
+      progressLine.style.width = `${Math.min(100, Math.max(0, scrollPercent))}%`;
+    }
+
+    if (header) {
+      if (scrollY > 30) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     }
   }
+
   window.addEventListener('scroll', handleScroll, { passive: true });
   handleScroll();
 
@@ -113,8 +125,8 @@ function initStickyNavAndActiveLinks() {
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
         e.preventDefault();
-        const navHeight = navbar ? navbar.offsetHeight : 0;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navHeight + 2;
+        const headerHeight = header ? header.offsetHeight : 0;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight + 2;
         window.scrollTo({
           top: targetPosition,
           behavior: 'smooth'
@@ -146,13 +158,39 @@ function initStickyNavAndActiveLinks() {
   }, observerOptions);
 
   sections.forEach((section) => sectionObserver.observe(section));
+
+  // Keyboard Shortcuts (1-5 Jump to Sections)
+  const sectionKeyMap = {
+    '1': '#services',
+    '2': '#experience',
+    '3': '#pricing',
+    '4': '#testimonials',
+    '5': '#faq'
+  };
+
+  document.addEventListener('keydown', (e) => {
+    // Ignore if user is typing in form inputs
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+    if (sectionKeyMap[e.key]) {
+      const targetEl = document.querySelector(sectionKeyMap[e.key]);
+      if (targetEl) {
+        const headerHeight = header ? header.offsetHeight : 0;
+        window.scrollTo({
+          top: targetEl.getBoundingClientRect().top + window.scrollY - headerHeight + 2,
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
 }
 
 /* ==========================================================================
-   3. MOBILE HAMBURGER MENU & FULL-SCREEN GLASS OVERLAY
+   3. ARCHITECTURAL INDEX DRAWER
    ========================================================================== */
 function initMobileMenu() {
   const hamburger = document.getElementById('hamburger-btn');
+  const menuBtnText = document.getElementById('menu-btn-text');
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
@@ -164,11 +202,15 @@ function initMobileMenu() {
       hamburger.classList.add('is-active');
       hamburger.setAttribute('aria-expanded', 'true');
       mobileMenu.classList.add('is-open');
+      mobileMenu.classList.remove('pointer-events-none');
+      if (menuBtnText) menuBtnText.textContent = 'INDEX [ ✕ ]';
       document.body.style.overflow = 'hidden';
     } else {
       hamburger.classList.remove('is-active');
       hamburger.setAttribute('aria-expanded', 'false');
       mobileMenu.classList.remove('is-open');
+      mobileMenu.classList.add('pointer-events-none');
+      if (menuBtnText) menuBtnText.textContent = 'INDEX [ + ]';
       document.body.style.overflow = '';
     }
   }
